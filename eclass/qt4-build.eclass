@@ -25,7 +25,7 @@ else
 fi
 
 HOMEPAGE="http://qt.nokia.com/"
-SRC_URI="https://download.qt.io/archive/qt/$(ver_cut 1-2)/${MY_P}.tar.gz"
+SRC_URI="https://download.qt.io/archive/qt/$(ver_cut 1-2)/${PV}/${MY_P}.tar.gz"
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 IUSE+=" debug pch aqua"
@@ -190,7 +190,6 @@ qt4-build_src_prepare() {
 	if [[ ${PN} != qt-core ]]; then
 		skip_qmake_build_patch
 		skip_project_generation_patch
-		symlink_binaries_to_buildtree
 	fi
 
 	if [[ ${CHOST} == *86*-apple-darwin* ]] ; then
@@ -406,7 +405,7 @@ setqtenv() {
 	# Set up installation directories
 	QTBASEDIR=${EPREFIX}/usr/$(get_libdir)/qt4
 	QTPREFIXDIR=${EPREFIX}/usr
-	QTBINDIR=${EPREFIX}/usr/bin
+	QTBINDIR=${EPREFIX}/usr/bin/qt4/
 	QTLIBDIR=${EPREFIX}/usr/$(get_libdir)/qt4
 	QMAKE_LIBDIR_QT=${QTLIBDIR}
 	QTPCDIR=${EPREFIX}/usr/$(get_libdir)/pkgconfig
@@ -668,11 +667,6 @@ skip_project_generation_patch() {
 # @DESCRIPTION:
 # Symlink generated binaries to buildtree so they can be used during compilation
 # time
-symlink_binaries_to_buildtree() {
-	for bin in qmake moc uic rcc; do
-		ln -s ${QTBINDIR}/${bin} "${S}"/bin/ || die "Symlinking ${bin} to ${S}/bin failed."
-	done
-}
 
 # @FUNCTION: fix_library_files
 # @DESCRIPTION:
