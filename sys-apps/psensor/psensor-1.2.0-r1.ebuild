@@ -22,7 +22,7 @@ RDEPEND="
 	hddtemp? ( app-admin/hddtemp )
 	net-misc/curl
 	server? ( net-libs/libmicrohttpd )
-	sys-apps/lm_sensors
+	sys-apps/lm-sensors
 	udisks? ( sys-fs/udisks:2 )
 	X? (
 		>=x11-libs/gtk+-3.4:3
