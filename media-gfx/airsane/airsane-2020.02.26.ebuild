@@ -32,6 +32,7 @@ S=${WORKDIR}/AirSane-${PV}
 
 PATCHES=(
 	"${FILESDIR}"/png.patch
+	"${FILESDIR}"/systemd.patch
 )
 
 src_configure() {
