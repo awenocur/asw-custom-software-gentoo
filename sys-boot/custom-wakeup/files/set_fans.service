@@ -1,0 +1,13 @@
+[Unit]
+Description=Run restart_wireguard
+Requires=network.target
+After=sysinit.target suspend.target hibernate.target hybrid-sleep.target
+
+[Service]
+User=root
+Type=oneshot
+ExecStart=/usr/libexec/fix_fans.sh
+
+[Install]
+WantedBy=suspend.target hibernate.target hybrid-sleep.target sysinit.target
+
