@@ -1,5 +1,5 @@
 [Unit]
-Description=Run restart_wireguard
+Description=fix fan and HDD settings
 Requires=network.target
 After=sysinit.target suspend.target hibernate.target hybrid-sleep.target
 
