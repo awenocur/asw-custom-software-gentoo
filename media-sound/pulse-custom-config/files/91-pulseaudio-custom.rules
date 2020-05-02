@@ -1,0 +1,9 @@
+SUBSYSTEM!="sound", GOTO="pulseaudio_custom_end"
+ACTION!="change", GOTO="pulseaudio_custom_end"
+KERNEL!="card*", GOTO="pulseaudio_custom_end"
+SUBSYSTEMS=="usb", GOTO="pulseaudio_custom_end"
+SUBSYSTEMS=="firewire", GOTO="pulseaudio_custom_end"
+
+ATTRS{subsystem_vendor}=="0x8086", ATTRS{subsystem_device}=="0xa170", ENV{PULSE_PROFILE_SET}="custom.conf"
+
+LABEL="pulseaudio_custom_end"
