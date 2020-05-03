@@ -4,6 +4,6 @@ KERNEL!="card*", GOTO="pulseaudio_custom_end"
 SUBSYSTEMS=="usb", GOTO="pulseaudio_custom_end"
 SUBSYSTEMS=="firewire", GOTO="pulseaudio_custom_end"
 
-ATTRS{subsystem_vendor}=="0x8086", ATTRS{subsystem_device}=="0xa170", ENV{PULSE_PROFILE_SET}="custom.conf"
+ATTRS{subsystem_vendor}=="0x1849", ATTRS{subsystem_device}=="0x5892", ENV{PULSE_PROFILE_SET}="custom.conf"
 
 LABEL="pulseaudio_custom_end"

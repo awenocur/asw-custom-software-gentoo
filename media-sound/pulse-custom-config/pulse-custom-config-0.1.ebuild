@@ -19,8 +19,11 @@ S=${WORKDIR}
 
 src_install() {
 	mkdir -p ${D}/usr/share/pulseaudio/alsa-mixer/profile-sets/
+	mkdir ${D}/usr/share/pulseaudio/alsa-mixer/paths/
 	mkdir -p ${D}/lib/udev/rules.d/
 	cp ${FILESDIR}/custom.conf ${D}/usr/share/pulseaudio/alsa-mixer/profile-sets/
 	cp ${FILESDIR}/91-pulseaudio-custom.rules ${D}/lib/udev/rules.d/
+	cp ${FILESDIR}/analog-input-front-mic-aux.conf ${D}/usr/share/pulseaudio/alsa-mixer/paths/
+	cp ${FILESDIR}/analog-input-rear-mic-aux.conf ${D}/usr/share/pulseaudio/alsa-mixer/paths/
 	default
 }
