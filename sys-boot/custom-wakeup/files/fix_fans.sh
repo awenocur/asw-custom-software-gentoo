@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /sys/devices/platform/nct6775.656/hwmon/hwmon2
+cd /sys/devices/platform/nct6775.656/hwmon/hwmon*
 echo 1 > pwm1_enable
 echo 0 > pwm1 #rear fan doesn't turn completely off
 echo 5 > pwm2_enable
