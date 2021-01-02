@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>haskell@gentoo.org</email>
+		<name>Gentoo Haskell</name>
+	</maintainer>
+	<use>
+	</use>
+	<longdescription>
+		Ropes optimised for updating using UTF-16 code units and
+		row/column pairs.  This implementation uses splay trees
+		instead of the usual finger trees. According to my
+		benchmarks, splay trees are faster in most situations.
+	</longdescription>
+</pkgmetadata>
