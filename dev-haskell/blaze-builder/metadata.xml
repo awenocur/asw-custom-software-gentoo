@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>haskell@gentoo.org</email>
+		<name>Gentoo Haskell</name>
+	</maintainer>
+	<use>
+	</use>
+	<longdescription>
+		This library provides an implementation of the older
+		blaze-builder interface in terms of the new builder that
+		shipped with bytestring-0.10.4.0
+		
+		This implementation is mostly intended as a bridge to the
+		new builder,  so that code that uses the old interface
+		can interoperate with code that uses the new
+		implementation.   Note that no attempt has been made
+		to preserve the old internal modules,  so code that
+		has these dependencies cannot use this interface.
+		
+		New code should,  for the most part,  use the new
+		interface.   However, this module does implement
+		a chunked HTTP encoding,  which is not otherwise
+		implemented (yet?) with the new builder.
+	</longdescription>
+</pkgmetadata>

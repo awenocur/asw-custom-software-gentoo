@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>haskell@gentoo.org</email>
+		<name>Gentoo Haskell</name>
+	</maintainer>
+	<use>
+	</use>
+	<longdescription>
+		When operating in a sandbox, or inside a nix-shell, it is
+		useful to be able to open the documentation for a
+		particular package or module.
+		
+		This simple command-line tool will open the local haddock
+		documentation for a particular package or module.
+		
+		Particularly useful for offline hacking.
+	</longdescription>
+</pkgmetadata>

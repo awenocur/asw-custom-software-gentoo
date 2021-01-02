@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>haskell@gentoo.org</email>
+		<name>Gentoo Haskell</name>
+	</maintainer>
+	<use>
+	</use>
+	<longdescription>
+		A typeclass similar to Data.Distributive, but for
+		data parameterised with a type constructor. The name
+		comes from the resemblance of its method to the regular
+		zipWith function. The abstraction is useful for example
+		for program config handling.
+	</longdescription>
+</pkgmetadata>
