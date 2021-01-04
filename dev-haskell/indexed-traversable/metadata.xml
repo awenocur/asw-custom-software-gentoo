@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>haskell@gentoo.org</email>
+		<name>Gentoo Haskell</name>
+	</maintainer>
+	<use>
+	</use>
+	<longdescription>
+		This package provides three useful generalizations:
+		
+		@
+		class Functor f =&gt; FunctorWithIndex i f | f -&gt; i where
+		\  imap :: (i -&gt; a -&gt; b) -&gt; f a -&gt; f b
+		@
+		
+		@
+		class Foldable f =&gt; FoldableWithIndex i f | f -&gt; i where
+		\  ifoldMap :: Monoid m =&gt; (i -&gt; a -&gt; m) -&gt; f a -&gt; m
+		@
+		
+		@
+		class (FunctorWithIndex i t, FoldableWithIndex i t, Traversable t) =&gt; TraversableWithIndex i t | t -&gt; i where
+		\  itraverse :: Applicative f =&gt; (i -&gt; a -&gt; f b) -&gt; t a -&gt; f (t b)
+		@
+		
+		This package contains instances for types in GHC boot libraries.
+		For some additional instances see [indexed-traversable-instances](https://hackage.haskell.org/package/indexed-traversable-instances).
+		
+		The [keys](https://hackage.haskell.org/package/keys) package provides similar functionality,
+		but uses (associated) @TypeFamilies@ instead of @FunctionalDependencies@.
+	</longdescription>
+</pkgmetadata>
