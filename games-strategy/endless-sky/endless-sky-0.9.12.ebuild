@@ -4,7 +4,8 @@
 
 EAPI=6
 
-inherit eutils gnome2-utils scons-utils
+PYTHON_COMPAT=( python3_{6,7,8} )
+inherit python-any-r1 eutils gnome2-utils scons-utils
 
 DESCRIPTION="Space exploration, trading & combat in the tradition of Terminal Velocity"
 HOMEPAGE="https://endless-sky.github.io"
