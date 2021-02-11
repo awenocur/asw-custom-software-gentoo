@@ -1,0 +1,21 @@
+diff --git a/kiwixbuild/buildenv.py b/kiwixbuild/buildenv.py
+index 73207e8..b12b33b 100644
+--- a/kiwixbuild/buildenv.py
++++ b/kiwixbuild/buildenv.py
+@@ -2,6 +2,7 @@
+ import os, sys, shutil
+ import subprocess
+ import platform
++import distro
+ 
+ from .utils import pj, download_remote, Defaultdict
+ from ._global import neutralEnv, option
+@@ -38,7 +39,7 @@ class PlatformNeutralEnv:
+             if cont.lower() != 'y':
+                 sys.exit(0)
+         if _platform == 'Linux':
+-            self.distname, _, _ = platform.linux_distribution()
++            self.distname, _, _ = distro.linux_distribution()
+             self.distname = self.distname.lower()
+             if self.distname == 'ubuntu':
+                 self.distname = 'debian'
