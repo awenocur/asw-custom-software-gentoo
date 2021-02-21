@@ -1,0 +1,12 @@
+diff --git a/doc/CMakeLists.txt b/doc/CMakeLists.txt
+index 5ea819b..ff270c8 100644
+--- a/doc/CMakeLists.txt
++++ b/doc/CMakeLists.txt
+@@ -21,6 +21,7 @@ if(DOXYGEN_FOUND)
+         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+         COMMENT "Generating API documentation with Doxygen" VERBATIM
+     )
++    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile DESTINATION ${CMAKE_INSTALL_DOCDIR})
+ else()
+     message(STATUS "Looking for doxygen - not found")
+     message(STATUS "  Disabled making of documentation.")
