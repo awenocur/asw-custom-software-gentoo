@@ -1,0 +1,11 @@
+diff '--color=auto' -ruN stremio-shell-9999/release.makefile stremio-shell/release.makefile
+--- stremio-shell-9999/release.makefile	2019-10-04 17:32:13.124627736 -0300
++++ stremio-shell/release.makefile	2019-10-04 17:34:17.794633440 -0300
+@@ -1,6 +1,6 @@
+ 
+ BUILD_DIR := build
+-INSTALL_DIR := ${PREFIX}/opt/stremio
++INSTALL_DIR := ${PREFIX}
+ 
+ ICON_BIN := smartcode-stremio.svg
+ 
