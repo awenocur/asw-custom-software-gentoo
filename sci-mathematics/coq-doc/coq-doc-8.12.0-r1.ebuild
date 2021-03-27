@@ -21,7 +21,9 @@ RDEPEND="
 	>=dev-lang/ocaml-4.11.0:=[ocamlopt?]
 	dev-ml/camlp5:=[ocamlopt?]
 	dev-ml/num:="
-DEPEND="${RDEPEND}
+DEPEND="${RDEPEND}	
+	dev-python/sphinx_rtd_theme
+	dev-python/beautifulsoup
 	dev-ml/findlib
 	media-libs/netpbm[png,zlib]
 	virtual/latex-base
