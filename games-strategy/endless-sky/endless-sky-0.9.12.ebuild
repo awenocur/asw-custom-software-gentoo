@@ -23,7 +23,12 @@ RDEPEND="media-libs/glew:0
 	virtual/opengl"
 DEPEND="${RDEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/gcc-10.patch"
+)
+
 src_prepare() {
+	default
 	sed -i 's/\(.*flags += \["\)-O3\("\]\)/\1\2/g' SConstruct || die
 	sed -i 's#env.Install("$DESTDIR$PREFIX/games", sky)#env.Install("$DESTDIR$PREFIX/bin", sky)#g' SConstruct || die
 	eapply_user

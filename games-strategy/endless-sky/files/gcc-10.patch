@@ -1,0 +1,12 @@
+diff --git a/Panel.h b/Panel.h
+index 1dc2776..5099500 100644
+--- a/source/Panel.h
++++ b/source/Panel.h
+@@ -19,6 +19,7 @@ PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ #include <list>
+ 
+ #include <SDL2/SDL.h>
++#include <string>
+ 
+ class Command;
+ class Point;
