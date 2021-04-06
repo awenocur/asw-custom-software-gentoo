@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Adam Wenocur
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 inherit font
 
 DESCRIPTION="Life Savers is a 1950s font family with 2 styles that was created by Pablo Impallari in 2012"

@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Adam Wenocur
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 inherit font
 
 DESCRIPTION="Calibri is a sans-serif typeface household developed by Luc(as) de Groot in 2002-2004 and introduced on the general general public in 2007, with Microsoft Office 2007 and Windows Vista.
