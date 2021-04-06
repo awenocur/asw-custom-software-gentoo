@@ -10,7 +10,7 @@ S="${WORKDIR}/${PN}-$(ver_cut 1-3)"
 
 LICENSE="LGPL-3"
 SLOT="0/${PV}"
-KEYWORDS="amd64 arm arm64 ppc ppc64 x86"
+KEYWORDS="~amd64 arm arm64 ppc ppc64 x86"
 IUSE="+ocamlopt +parmap +zip +bzip2 xml curl rpm4 +test"
 
 BDEPEND="
@@ -49,9 +49,12 @@ QA_FLAGS_IGNORED='.*'
 
 src_prepare() {
 	default
-	sed -e 's/INSTALL_STUFF_ +=/INSTALL_STUFF_ =/' -i Makefile || die
+	sed -e 's/INSTALL_STUFF_ += \(.*cmi)\)/INSTALL_STUFF_ = \1/' -i Makefile || die
+	sed -e 's/@\$(INSTALL) -patch-version \$(VERSION) \$(NAME) \$(INSTALL_STUFF)/install -d \$(LIBDIR);cp -LR _build\/install\/default\/lib\/dose3 \$(LIBDIR)/' -i Makefile || die
+	sed -e 's/ _build\/doselibs\// _build\/default\/src\/*\//g' -i Makefile || die
 	sed -e 's/installlib: META installcudf/installlib:/' -i Makefile || die
 	sed -e 's/_build\/applications/_build\/install\/default\/bin/' -i Makefile || die
+	sed -e 's/\.\$(OCAMLEXT)//' -i Makefile || die
 	sed -e 's/^.*\/distcheck .*BINDIR)\/.*EXE.*$//' -i Makefile || die
 	rm -R ${S}/src/*/tests
 	rm -R ${S}/tests
@@ -69,10 +72,10 @@ src_configure() {
 }
 
 src_compile() {
-	emake -j1 LIBDIR=${ED}/usr/lib VERBOSE="-classic-display"
+	emake -j1 VERBOSE="-classic-display"
 }
 
 src_install() {
-	emake DESTDIR="${D}" BINDIR="${ED}/usr/bin" LIBDIR=${ED}/usr/lib install || die
+	emake DESTDIR="${D}" BINDIR="${ED}/usr/bin" LIBDIR=${ED}/usr/$(get_libdir)/ocaml install || die
 	dodoc CHANGES CREDITS README.architecture TODO
 }
