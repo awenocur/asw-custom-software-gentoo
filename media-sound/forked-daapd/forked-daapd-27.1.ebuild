@@ -51,6 +51,7 @@ src_prepare() {
 }
 
 src_configure() {
+	CFLAGS=$CFLAGS\ -fcommon \
 	ac_cv_path_ANTLR=antlr3.5 \
 	econf \
 		--with-alsa \
