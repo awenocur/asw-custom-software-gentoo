@@ -54,6 +54,10 @@ src_compile() {
 	eqmake5 xpdf.pro -spec linux-g++
 	emake
 	cd "${S}"
+	cd ../OpenBoard-ThirdParty/quazip
+	eqmake5 quazip.pro -spec linux-g++
+	emake
+	cd "${S}"
 	eqmake5 OpenBoard.pro -spec linux-g++
 	emake
 }

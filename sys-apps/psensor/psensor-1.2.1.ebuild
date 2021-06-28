@@ -38,7 +38,6 @@ DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )"
 
 src_prepare() {
-	epatch "${FILESDIR}"/fix_errors.patch
 	eapply_user
 }
 
@@ -49,7 +48,7 @@ src_configure() {
 		$(use_with X x)
 	)
 
-	econf "${econfargs[@]}" || die
+	CFLAGS=-Wno-error=incompatible-pointer-types econf "${econfargs[@]}" || die
 }
 
 pkg_preinst() {
