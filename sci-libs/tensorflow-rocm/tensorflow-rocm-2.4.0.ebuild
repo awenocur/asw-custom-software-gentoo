@@ -80,6 +80,7 @@ RDEPEND="
 	sys-libs/zlib
 	>=sys-apps/hwloc-2
 	mpi? ( virtual/mpi )
+	!sci-libs/tensorflow
 	python? (
 		${PYTHON_DEPS}
 		>=dev-libs/flatbuffers-1.12.0:=
