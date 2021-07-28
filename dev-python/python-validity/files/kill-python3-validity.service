@@ -1,0 +1,10 @@
+[Unit]
+Description=python-validity driver dbus service
+
+[Service]
+Type=oneshot
+ExecStart=systemctl stop python3-validity
+Restart=no
+
+[Install]
+WantedBy=suspend.target hibernate.target hybrid-sleep.target
