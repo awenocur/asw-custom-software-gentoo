@@ -114,6 +114,11 @@ src_prepare() {
 	# move the dictionary files to the expected place
 	mkdir -p "${S}/dependencies" || die
 	mv "${WORKDIR}/dictionaries" "${S}/dependencies" || die
+
+	# make sure icons and mime stuff are with prefix
+	sed -i \
+		-e "s:/usr:${EPREFIX}/usr:g" \
+		CMakeGlobals.txt src/cpp/desktop/CMakeLists.txt || die
 }
 
 src_configure() {
@@ -151,7 +156,8 @@ src_configure() {
 	)
 
 	if ! use headless; then
-		mycmakeargs+=( -DQT_QMAKE_EXECUTABLE="$(qt5_get_bindir)/qmake" )
+		mycmakeargs+=( -DQT_QMAKE_EXECUTABLE="$(qt5_get_bindir)/qmake"
+			       -DRSTUDIO_INSTALL_FREEDESKTOP="$(usex !headless "ON" "OFF")")
 	fi
 
 	# It looks like eant takes care of this for us during src_compile
@@ -216,4 +222,10 @@ src_test() {
 
 pkg_preinst() {
 	java-pkg-2_pkg_preinst
+}
+
+pkg_postinst() {
+	use headless || { xdg_desktop_database_update
+		xdg_mimeinfo_database_update
+		xdg_icon_cache_update ;}
 }
