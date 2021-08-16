@@ -1,0 +1,16 @@
+diff --git a/OpenBoard-1.6.1/OpenBoard.pro b/OpenBoard-1.6.1/OpenBoard.pro
+index 2de5b26..2dff312 100644
+--- a/OpenBoard.pro
++++ b/OpenBoard.pro
+@@ -451,7 +451,10 @@ linux-g++* {
+     #LIBS += -lprofiler
+     LIBS += -lX11
+     LIBS += -lquazip5
+-    INCLUDEPATH += "/usr/include/quazip"
++    THIRD_PARTY_PATH=../OpenBoard-ThirdParty
++    DEPENDPATH += $$THIRD_PARTY_PATH/quazip/
++    INCLUDEPATH += $$THIRD_PARTY_PATH/quazip/
++    include($$THIRD_PARTY_PATH/quazip/quazip.pri)
+ 
+     LIBS += -lpoppler
+     INCLUDEPATH += "/usr/include/poppler"

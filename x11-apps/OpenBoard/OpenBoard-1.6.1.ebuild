@@ -5,6 +5,8 @@ EAPI=7
 
 inherit qmake-utils eutils xdg
 
+PATCHES=( "${FILESDIR}/${PN}-1.6.1-fix-quazip.patch" )
+
 DESCRIPTION="open cross-platform interactive whiteBoard application mainly for use in schools"
 
 HOMEPAGE="http://openboard.ch/"
