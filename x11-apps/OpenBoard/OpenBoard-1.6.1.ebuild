@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit qmake-utils eutils xdg
+inherit qmake-utils eutils xdg desktop
 
 PATCHES=( "${FILESDIR}/${PN}-1.6.1-fix-quazip.patch" )
 

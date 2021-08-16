@@ -5,9 +5,10 @@ index 2de5b26..2dff312 100644
 @@ -451,7 +451,10 @@ linux-g++* {
      #LIBS += -lprofiler
      LIBS += -lX11
-     LIBS += -lquazip5
+-    LIBS += -lquazip5
 -    INCLUDEPATH += "/usr/include/quazip"
 +    THIRD_PARTY_PATH=../OpenBoard-ThirdParty
++    LIBS += -lquazip -L$$THIRD_PARTY_PATH/quazip/lib/linux
 +    DEPENDPATH += $$THIRD_PARTY_PATH/quazip/
 +    INCLUDEPATH += $$THIRD_PARTY_PATH/quazip/
 +    include($$THIRD_PARTY_PATH/quazip/quazip.pri)
