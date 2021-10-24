@@ -52,7 +52,7 @@ RDEPEND="
 	net-libs/nodejs
 	sys-process/lsof
 	>=virtual/jdk-1.8:=
-	dev-cpp/yaml-cpp
+	<dev-cpp/yaml-cpp-0.7
 	!headless? (
 		>=dev-qt/qtcore-${QT_VER}:${QT_SLOT}
 		>=dev-qt/qtdbus-${QT_VER}:${QT_SLOT}
