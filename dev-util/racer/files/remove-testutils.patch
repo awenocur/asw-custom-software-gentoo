@@ -1,0 +1,13 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 6508cb4..e06367e 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -90,8 +90,6 @@ package = "rustc-ap-rustc_session"
+ [dependencies.rustc_span]
+ version = "718.0.0"
+ package = "rustc-ap-rustc_span"
+-[dev-dependencies.racer-testutils]
+-version = "0.1"
+ 
+ [features]
+ default = ["metadata"]
