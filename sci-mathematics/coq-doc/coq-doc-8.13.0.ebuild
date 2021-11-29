@@ -23,7 +23,7 @@ RDEPEND="
 	dev-ml/num:="
 DEPEND="${RDEPEND}	
 	dev-python/sphinx_rtd_theme
-	dev-python/beautifulsoup
+	dev-python/beautifulsoup4
 	dev-ml/findlib
 	media-libs/netpbm[png,zlib]
 	virtual/latex-base
@@ -33,9 +33,10 @@ DEPEND="${RDEPEND}
 	dev-texlive/texlive-mathscience
 	dev-texlive/texlive-latexextra
 	dev-python/pybtex-docutils
-	<dev-python/sphinxcontrib-bibtex-2
 	>=dev-python/antlr4-python3-runtime-4.7.2
 "
+
+BDEPEND="<dev-python/sphinxcontrib-bibtex-2"
 
 S=${WORKDIR}/${MY_P}
 
