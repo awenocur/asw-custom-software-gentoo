@@ -74,4 +74,7 @@ src_configure() {
 src_install() {
 	cmake_src_install
 	chrpath --delete "${D}/usr/lib64/librocsolver.so.0.1"
+	rm -R ${D}/usr/usr
+	mkdir ${D}/usr/include
+	ln -s ../rocsolver/usr/include/rocsolver ${D}/usr/include
 }
