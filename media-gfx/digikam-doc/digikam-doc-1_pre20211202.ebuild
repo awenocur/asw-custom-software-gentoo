@@ -15,6 +15,7 @@ KEYWORDS='amd64 x86 arm64'
 src_install()
 {
 	cmake_src_install
+	mkdir -p ${D}/usr/share/help
 	mv ${D}/usr/share/doc/HTML/* ${D}/usr/share/help
 	rmdir ${D}/usr/share/doc/HTML
 }
