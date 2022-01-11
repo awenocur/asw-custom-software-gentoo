@@ -1,0 +1,14 @@
+diff --git a/intern/cycles/device/hip/util.h b/intern/cycles/device/hip/util.h
+index a2ff861..e9420be 100644
+--- a/intern/cycles/device/hip/util.h
++++ b/intern/cycles/device/hip/util.h
+@@ -64,7 +64,7 @@ static inline bool hipSupportsDevice(const int hipDevId)
+   hipDeviceGetAttribute(&major, hipDeviceAttributeComputeCapabilityMajor, hipDevId);
+   hipDeviceGetAttribute(&minor, hipDeviceAttributeComputeCapabilityMinor, hipDevId);
+ 
+-  return (major > 10) || (major == 10 && minor >= 1);
++  return true;
+ }
+ 
+ CCL_NAMESPACE_END
+ 

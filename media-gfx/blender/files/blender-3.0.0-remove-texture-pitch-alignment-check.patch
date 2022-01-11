@@ -1,0 +1,14 @@
+diff --git a/intern/cycles/device/hip/device_impl.cpp b/home/awenocur/patched-blender-sources/device_impl.cpp
+index 42dd538..4249a44 100644
+--- a/intern/cycles/device/hip/device_impl.cpp
++++ b/home/awenocur/patched-blender-sources/device_impl.cpp
+@@ -111,9 +111,6 @@ HIPDevice::HIPDevice(const DeviceInfo &info, Stats &stats, Profiler &profiler)
+    * so we can predict which memory to map to host. */
+   hip_assert(hipDeviceGetAttribute(&can_map_host, hipDeviceAttributeCanMapHostMemory, hipDevice));
+ 
+-  hip_assert(
+-      hipDeviceGetAttribute(&pitch_alignment, hipDeviceAttributeTexturePitchAlignment, hipDevice));
+-
+   unsigned int ctx_flags = hipDeviceLmemResizeToMax;
+   if (can_map_host) {
+     ctx_flags |= hipDeviceMapHost;

@@ -1,0 +1,12 @@
+diff --git a/extern/hipew/include/hipew.h b/extern/hipew/include/hipew.h
+index 50f6d66..b654418 100644
+--- a/extern/hipew/include/hipew.h
++++ b/extern/hipew/include/hipew.h
+@@ -380,7 +380,6 @@ typedef enum hipDeviceAttribute_t {
+   hipDeviceAttributeSurfaceAlignment,                 ///< Cuda only. Alignment requirement for surfaces
+   hipDeviceAttributeTccDriver,                        ///< Cuda only. Whether device is a Tesla device using TCC driver
+   hipDeviceAttributeTextureAlignment,                 ///< Alignment requirement for textures
+-  hipDeviceAttributeTexturePitchAlignment,            ///< Pitch alignment requirement for 2D texture references bound to pitched memory;
+   hipDeviceAttributeTotalConstantMemory,              ///< Constant memory size in bytes.
+   hipDeviceAttributeTotalGlobalMem,                   ///< Global memory available on devicice.
+   hipDeviceAttributeUnifiedAddressing,                ///< Cuda only. An unified address space shared with the host.
