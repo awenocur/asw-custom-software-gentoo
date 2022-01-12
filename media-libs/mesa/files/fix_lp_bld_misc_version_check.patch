@@ -1,0 +1,14 @@
+diff --git a/src/gallium/auxiliary/gallivm/lp_bld_misc.cpp b/src/gallium/auxiliary/gallivm/lp_bld_misc.cpp
+index 3efa1d9..ad1087e 100644
+--- a/src/gallium/auxiliary/gallivm/lp_bld_misc.cpp
++++ b/src/gallium/auxiliary/gallivm/lp_bld_misc.cpp
+@@ -600,8 +600,5 @@ lp_is_function(LLVMValueRef v)
+ extern "C" void
+ lp_set_module_stack_alignment_override(LLVMModuleRef MRef, unsigned align)
+ {
+-#if LLVM_VERSION_MAJOR >= 13
+-   llvm::Module *M = llvm::unwrap(MRef);
+-   M->setOverrideStackAlignment(align);
+-#endif
++
+ }
