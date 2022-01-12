@@ -1,0 +1,41 @@
+diff --git a/gdb/configure b/gdb/configure.new
+old mode 100755
+new mode 100644
+index fd288e5ffa..af89cb9e57
+--- a/gdb/configure
++++ b/gdb/configure.new
+@@ -6823,12 +6823,12 @@ fi
+ if test "${with_rocm_dbgapi+set}" = set; then :
+   withval=$with_rocm_dbgapi;
+ else
+-  with_rocm_dbgapi=/opt/rocm
++  with_rocm_dbgapi=/usr
+ fi
+ 
+ 
+ save_CPPFLAGS=${CPPFLAGS}
+-CPPFLAGS="${CPPFLAGS} -I$with_rocm_dbgapi/include"
++CPPFLAGS="${CPPFLAGS} -I/include"
+ for ac_header in amd-dbgapi.h
+ do :
+   ac_fn_c_check_header_mongrel "$LINENO" "amd-dbgapi.h" "ac_cv_header_amd_dbgapi_h" "$ac_includes_default"
+@@ -6881,7 +6881,7 @@ CPPFLAGS=${save_CPPFLAGS}
+ 
+ save_LIBS=${LIBS}
+ save_LDFLAGS=${LDFLAGS}
+-LDFLAGS="${LDFLAGS} -L$with_rocm_dbgapi/lib"
++LDFLAGS="${LDFLAGS} -L/usr/lib64"
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for amd_dbgapi_initialize in -lrocm-dbgapi" >&5
+ $as_echo_n "checking for amd_dbgapi_initialize in -lrocm-dbgapi... " >&6; }
+ if ${ac_cv_lib_rocm_dbgapi_amd_dbgapi_initialize+:} false; then :
+@@ -6937,8 +6937,8 @@ if test x"$ac_cv_header_amd_dbgapi_h" = xyes \
+     TARGET_OBS="$TARGET_OBS amdgcn-rocm-tdep.o rocm-tdep.o solib-rocm.o"
+   fi
+ 
+-  CPPFLAGS="${CPPFLAGS} -I$with_rocm_dbgapi/include"
+-  ROCM_DBGAPI_LIBS="-Wl,--rpath,\$\${LD_RUN_PATH:-$with_rocm_dbgapi/lib} $with_rocm_dbgapi/lib/librocm-dbgapi.so"
++  CPPFLAGS="${CPPFLAGS} -I/usr/include"
++  ROCM_DBGAPI_LIBS="-Wl,--rpath,\$\${LD_RUN_PATH:-/usr/lib64} /usr/lib64/librocm-dbgapi.so"
+ 
+ else
+   if test x"$require_rocm_dbgapi" = xyes; then
