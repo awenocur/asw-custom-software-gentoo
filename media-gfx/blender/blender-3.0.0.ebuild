@@ -291,7 +291,7 @@ src_configure() {
 			-DWITH_LINKER_LLD=OFF
 		)
 	fi
-
+	export PATH=/usr/lib/llvm/roc/bin:/usr/bin:/bin
 	cmake_src_configure
 }
 
