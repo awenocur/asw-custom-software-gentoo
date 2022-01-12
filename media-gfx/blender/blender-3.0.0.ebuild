@@ -59,7 +59,7 @@ RDEPEND="${PYTHON_DEPS}
 	virtual/glu
 	virtual/jpeg
 	virtual/libintl
-	virtual/opengl
+	media-libs/libglvnd:roc
 	alembic? ( >=media-gfx/alembic-1.7.12[boost(+),hdf(+)] )
 	collada? ( >=media-libs/opencollada-1.6.68 )
 	color-management? ( >=media-libs/opencolorio-2.0.0 )
@@ -278,6 +278,7 @@ src_configure() {
 		-DWITH_CYCLES_DEVICE_HIP=ON
 		-DWITH_CYCLES_HIP_BINARIES=ON
 		-DCYCLES_HIP_BINARIES_ARCH=gfx803
+		-DCMAKE_PREFIX_PATH=/usr/lib/mesa-roc
 	)
 
 	append-flags $(usex debug '-DDEBUG' '-DNDEBUG')
