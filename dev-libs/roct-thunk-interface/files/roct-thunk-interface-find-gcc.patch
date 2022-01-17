@@ -1,0 +1,23 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5ad80b3..4bcde64 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -187,16 +187,12 @@ target_link_libraries ( ${HSAKMT_TARGET}
+ )
+ 
+ target_compile_options(${HSAKMT_TARGET} PRIVATE ${DRM_CFLAGS} ${HSAKMT_C_FLAGS})
+-if(NOT DISTRO_ID MATCHES "ubuntu")
+-  find_library(LIBGCC NAMES libgcc_s.so.1 REQUIRED)
+-  message(STATUS "LIBGCC:" ${LIBGCC})
+-  target_link_libraries( ${HSAKMT_TARGET} PRIVATE ${LIBGCC} )
+-else()
++
+   find_library(UDEV NAMES libudev.so libudev.a REQUIRED)
+   message(STATUS "UDEV:" ${UDEV})
+   find_package(ZLIB REQUIRED)
+   target_link_libraries( ${HSAKMT_TARGET} PRIVATE ${ZLIB} ${UDEV} )
+-endif()
++
+ 
+ ## Define default paths and packages.
+ if( CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT )

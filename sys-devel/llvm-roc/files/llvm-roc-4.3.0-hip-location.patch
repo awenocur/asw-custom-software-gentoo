@@ -1,0 +1,53 @@
+replace hardcoded hip finder with Gentoo paths.
+
+It is not necessary to check HIP runtime each time.
+
+Author: Benda Xu <heroxbd@gentoo.org>
+Author: Yiyang Wu <xgreenlandforwyy@gmail.com>
+
+--- orig/clang/lib/Driver/ToolChains/AMDGPU.cpp
++++ llvm-project-rocm-4.3.0/clang/lib/Driver/ToolChains/AMDGPU.cpp
+@@ -423,42 +298,7 @@ void RocmInstallationDetector::detectDev
+ }
+ 
+ void RocmInstallationDetector::detectHIPRuntime() {
+-  SmallVector<Candidate, 4> HIPSearchDirs;
+-  if (!HIPPathArg.empty())
+-    HIPSearchDirs.emplace_back(HIPPathArg.str(), /*StrictChecking=*/true);
+-  else
+-    HIPSearchDirs.append(getInstallationPathCandidates());
+-  auto &FS = D.getVFS();
+-
+-  for (const auto &Candidate : HIPSearchDirs) {
+-    InstallPath = Candidate.Path;
+-    if (InstallPath.empty() || !FS.exists(InstallPath))
+-      continue;
+-    // HIP runtime built by SPACK is installed to
+-    // <rocm_root>/hip-<rocm_release_string>-<hash> directory.
+-    auto SPACKPath = findSPACKPackage(Candidate, "hip");
+-    InstallPath = SPACKPath.empty() ? InstallPath : SPACKPath;
+-
+-    BinPath = InstallPath;
+-    llvm::sys::path::append(BinPath, "bin");
+-    IncludePath = InstallPath;
+-    llvm::sys::path::append(IncludePath, "include");
+-    LibPath = InstallPath;
+-    llvm::sys::path::append(LibPath, "lib");
+-
+-    llvm::ErrorOr<std::unique_ptr<llvm::MemoryBuffer>> VersionFile =
+-        FS.getBufferForFile(BinPath + "/.hipVersion");
+-    if (!VersionFile && Candidate.StrictChecking)
+-      continue;
+-
+-    if (HIPVersionArg.empty() && VersionFile)
+-      if (parseHIPVersionFile((*VersionFile)->getBuffer()))
+-        continue;
+-
+-    HasHIPRuntime = true;
+-    return;
+-  }
+-  HasHIPRuntime = false;
++  HasHIPRuntime = true;
+ }
+ 
+ void RocmInstallationDetector::print(raw_ostream &OS) const {
