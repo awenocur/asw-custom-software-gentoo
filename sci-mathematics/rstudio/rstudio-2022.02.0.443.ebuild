@@ -8,6 +8,7 @@ inherit cmake java-pkg-2 java-ant-2 multiprocessing pam qmake-utils xdg-utils
 QT_VER=5.12.6
 QT_SLOT=5
 
+CMAKE_BUILD_TYPE=Debug
 DESCRIPTION="IDE for the R language"
 HOMEPAGE="
 	https://rstudio.com
@@ -80,7 +81,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-1.4.1717-boost-imports-and-namespaces.patch"
 	"${FILESDIR}/${PN}-2022.02.0.443-cmake-bundled-dependencies.patch"
 	"${FILESDIR}/${PN}-1.4.1717-fix-boost-version-check.patch"
-	"${FILESDIR}/${PN}-1.4.1106-resource-path.patch"
+	"${FILESDIR}/${PN}-2022.02.0.443-resource-path.patch"
 	"${FILESDIR}/${PN}-1.4.1106-server-paths.patch"
 	"${FILESDIR}/${PN}-2022.02.0.443-cmake-find_library.patch"
 )
