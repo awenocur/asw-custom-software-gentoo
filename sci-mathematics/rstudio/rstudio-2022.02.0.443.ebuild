@@ -8,7 +8,7 @@ inherit cmake java-pkg-2 java-ant-2 multiprocessing pam qmake-utils xdg-utils
 QT_VER=5.12.6
 QT_SLOT=5
 
-CMAKE_BUILD_TYPE=Debug
+CMAKE_BUILD_TYPE=Release
 DESCRIPTION="IDE for the R language"
 HOMEPAGE="
 	https://rstudio.com
@@ -150,6 +150,7 @@ src_configure() {
 	# however it also installs a test script, which we probably don't want.
 	local mycmakeargs=(
 		-DRSTUDIO_INSTALL_SUPPORTING=${EPREFIX}/usr/share/${PN}
+		-DRSTUDIO_INSTALL_SCRIPTS=${EPREFIX}/usr/bin
 		-DRSTUDIO_TARGET=${RSTUDIO_BUILD_TYPE}
 		-DRSTUDIO_UNIT_TESTS_DISABLED=$(usex test OFF ON)
 		-DRSTUDIO_USE_SYSTEM_BOOST=ON
