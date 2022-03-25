@@ -127,6 +127,7 @@ src_configure() {
 	export RSTUDIO_VERSION_MAJOR=$(ver_cut 1)
 	export RSTUDIO_VERSION_MINOR=$(ver_cut 2)
 	export RSTUDIO_VERSION_PATCH=$(ver_cut 3)
+	export RSTUDIO_VERSION_SUFFIX=$(ver_cut 4)
 
 	# The cmake configurations allow installing either or both of a Desktop
 	# component (i.e. a graphical front-end written in Qt) or a Server component
