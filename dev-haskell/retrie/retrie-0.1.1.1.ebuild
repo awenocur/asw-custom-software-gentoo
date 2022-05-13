@@ -20,7 +20,7 @@ IUSE="+buildexecutable"
 RDEPEND=">=dev-haskell/ansi-terminal-0.10.3:=[profile?] <dev-haskell/ansi-terminal-0.11:=[profile?]
 	>=dev-haskell/async-2.2.2:=[profile?] <dev-haskell/async-2.3:=[profile?]
 	>=dev-haskell/data-default-0.7.1:=[profile?] <dev-haskell/data-default-0.8:=[profile?]
-	>=dev-lang/ghc-8.4:=[profile?] <dev-lang/ghc-8.12:=[profile?]
+	>=dev-lang/ghc-8.8:=[profile?] <dev-lang/ghc-9.2:=[profile?]
 	>=dev-haskell/ghc-exactprint-0.6.2:=[profile?] <dev-haskell/ghc-exactprint-0.7:=[profile?]
 	>=dev-haskell/mtl-2.2.2:=[profile?] <dev-haskell/mtl-2.3:=[profile?]
 	>=dev-haskell/optparse-applicative-0.15.1:=[profile?] <dev-haskell/optparse-applicative-0.16:=[profile?]
