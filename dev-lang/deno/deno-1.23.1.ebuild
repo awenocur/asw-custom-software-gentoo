@@ -555,7 +555,7 @@ src_prepare() {
 
 src_compile() {
 	export V8_FROM_SOURCE=TRUE
-	CLANG_VERSION=$(ls -X "${EROOT}"/usr/lib/llvm | grep '^[0-9]*$') | tail -n1
+	CLANG_VERSION=$(ls -X "${EROOT}"/usr/lib/llvm | grep '^[0-9]*$' | tail -n1)
 	export CLANG_BASE_PATH="${EROOT}"/usr/lib/llvm/${CLANG_VERSION}
 	cargo_src_compile
 }
