@@ -2,6 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+KEYWORDS="amd64 x86"
+
+V8_VERSION='0.44.3'
 
 CRATES="
 abort_on_panic-2.0.0
@@ -485,7 +488,7 @@ urlpattern-0.2.0
 utf-8-0.7.6
 utf8parse-0.2.0
 uuid-1.0.0
-v8-0.44.3
+v8-${V8_VERSION}
 vcpkg-0.2.15
 version_check-0.9.4
 void-1.0.2
@@ -546,5 +549,13 @@ LICENSE=MIT
 
 src_prepare() {
 	rm Cargo.lock
+	cat ${FILESDIR}/fix-clang-flags.patch | patch -d ${ECARGO_VENDOR}/v8-${V8_VERSION}/build/config/compiler
 	default
+}
+
+src_compile() {
+	export V8_FROM_SOURCE=TRUE
+	CLANG_VERSION=$(ls -X "${EROOT}"/usr/lib/llvm | grep '^[0-9]*$') | tail -n1
+	export CLANG_BASE_PATH="${EROOT}"/usr/lib/llvm/${CLANG_VERSION}
+	cargo_src_compile
 }
