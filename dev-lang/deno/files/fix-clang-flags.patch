@@ -11,3 +11,12 @@ index 62003d5..5563b6f 100644
        # TODO(https://crbug.com/1231236): Use -ffile-compilation-dir= here.
        cflags += [
          "-Xclang",
+@@ -1548,7 +1548,7 @@ config("default_warnings") {
+         cflags += [ "-Wno-unqualified-std-cast-call" ]
+       }
+ 
+-      if (!is_nacl && !(is_chromeos ||
++      if (false && !is_nacl && !(is_chromeos ||
+                         default_toolchain == "//build/toolchain/cros:target")) {
+         # TODO(https://crbug.com/1316298): Re-enable once test failure is figured out
+         cflags += [

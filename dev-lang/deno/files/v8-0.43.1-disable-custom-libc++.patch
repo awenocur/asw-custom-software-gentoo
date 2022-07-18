@@ -1,0 +1,10 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index d76d3ae..0c408b3 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -124,5 +124,4 @@ version = "0.1.8"
+ version = "4.2.5"
+ 
+ [features]
+-default = ["use_custom_libcxx"]
+ use_custom_libcxx = []
