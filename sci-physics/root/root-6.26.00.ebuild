@@ -109,7 +109,9 @@ CDEPEND="
 	pythia6? ( sci-physics/pythia:6 )
 	pythia8? ( sci-physics/pythia:8 )
 	python? ( ${PYTHON_DEPS} )
-	R? ( dev-lang/R )
+	R? ( dev-lang/R 
+	     dev-R/RInside
+	     dev-R/Rcpp )
 	shadow? ( sys-apps/shadow )
 	sqlite? ( dev-db/sqlite:3 )
 	ssl? ( dev-libs/openssl:0= )
