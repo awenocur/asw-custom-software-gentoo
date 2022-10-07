@@ -36,7 +36,7 @@ DEPEND="${RDEPEND}
 	>=dev-python/antlr4-python3-runtime-4.7.2
 "
 
-BDEPEND="<dev-python/sphinxcontrib-bibtex-2"
+BDEPEND="dev-python/sphinxcontrib-bibtex"
 
 S=${WORKDIR}/${MY_P}
 

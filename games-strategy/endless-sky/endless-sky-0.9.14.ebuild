@@ -4,7 +4,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{8,9,10,11} )
 inherit python-any-r1 eutils gnome2-utils scons-utils
 
 DESCRIPTION="Space exploration, trading & combat in the tradition of Terminal Velocity"

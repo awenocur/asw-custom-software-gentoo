@@ -18,7 +18,7 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
 -
 -    # Add hcc headers
 -    inc_dirs.append(rocm_toolkit_path + "/hcc/include")
-+    inc_dirs.append("@GENTOO_PORTAGE_EPREFIX@/usr/lib/llvm/roc/lib/clang/13.0.0/include")
++    inc_dirs.append("@GENTOO_PORTAGE_EPREFIX@/usr/lib/llvm/roc/lib/clang/14.0.0/include")
  
      return inc_dirs
  
@@ -47,7 +47,7 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
          ]
      ]
  
-@@ -549,80 +537,78 @@ def _create_local_rocm_repository(reposi
+@@ -549,101 +537,100 @@ def _create_local_rocm_repository(reposi
      copy_rules = [
          make_copy_dir_rule(
              repository_ctx,
@@ -70,6 +70,14 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
 -            out_dir = "rocm/include/rocblas",
 +            src_dir = rocm_toolkit_path + "/include/rocblas",
 +            out_dir = "rocm/include/",
+         ),
+         make_copy_dir_rule(
+             repository_ctx,
+             name = "rocblas-hsaco",
+-            src_dir = rocm_toolkit_path + "/rocblas/lib/library",
+-            out_dir = "rocm/lib/rocblas/lib/library",
++            src_dir = rocm_toolkit_path + "/lib64/rocblas/library",
++            out_dir = "lib/rocblas/library",
          ),
          make_copy_dir_rule(
              repository_ctx,
@@ -153,7 +161,7 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
 -                name = "hiprand-include",
 -                src_dir = rocm_toolkit_path + "/hiprand/include",
 -                out_dir = "rocm/include/hiprand",
--            )
+-            ),
 -        )
 -
 -    rocrand_include = ""
@@ -167,12 +175,28 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
 -                name = "rocrand-include",
 -                src_dir = rocm_toolkit_path + "/rocrand/include",
 -                out_dir = "rocm/include/rocrand",
--            )
+-            ),
 -        )
--
+ 
      rocm_libs = _find_libs(repository_ctx, rocm_config, hipfft_or_rocfft, bash_bin)
      rocm_lib_srcs = []
      rocm_lib_outs = []
+     for lib in rocm_libs.values():
+         rocm_lib_srcs.append(lib.path)
+         rocm_lib_outs.append("rocm/lib/" + lib.file_name)
+     copy_rules.append(make_copy_files_rule(
+         repository_ctx,
+         name = "rocm-lib",
+         srcs = rocm_lib_srcs,
+         outs = rocm_lib_outs,
+     ))
+ 
+-    clang_offload_bundler_path = rocm_toolkit_path + "/llvm/bin/clang-offload-bundler"
++    clang_offload_bundler_path = rocm_toolkit_path + "/lib/llvm/roc/bin/clang-offload-bundler"
+ 
+     # copy files mentioned in third_party/gpus/rocm/BUILD
+     copy_rules.append(make_copy_files_rule(
+         repository_ctx,
 @@ -679,14 +665,17 @@ def _create_local_rocm_repository(reposi
              "%{roctracer_lib}": rocm_libs["roctracer64"].file_name,
              "%{rocsolver_lib}": rocm_libs["rocsolver"].file_name,
@@ -388,16 +412,3 @@ diff --color -upr orig/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_dr
  
    if depfiles:
      # Generate the dependency file
-diff --color -upr orig/compiler/mlir/tools/kernel_gen/transforms/gpu_kernel_to_blob_pass.cc tensorflow/compiler/mlir/tools/kernel_gen/transforms/gpu_kernel_to_blob_pass.cc
---- orig/tensorflow/compiler/mlir/tools/kernel_gen/transforms/gpu_kernel_to_blob_pass.cc	2021-10-27 11:51:07.903006297 +0800
-+++ tensorflow-2.5.0/tensorflow/compiler/mlir/tools/kernel_gen/transforms/gpu_kernel_to_blob_pass.cc	2021-10-27 11:49:31.797289639 +0800
-@@ -113,7 +113,8 @@ class GpuKernelToBlobPass
-             "Could not parse ROCm architecture prefix (expected gfx)");
-       }
-       uint32_t arch;
--      if (!absl::SimpleAtoi(consumable_arch, &arch)) {
-+      absl::SimpleAtoi(consumable_arch, &arch);
-+      if (arch <= 0) {
-         return InternalError("Could not parse ROCm architecture number");
-       }
- 
