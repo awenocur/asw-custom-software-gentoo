@@ -3,11 +3,14 @@
 
 EAPI=6
 
-inherit gnome2-utils xdg-utils
+inherit gnome2-utils xdg-utils git-r3 autotools
 
 DESCRIPTION="A graphical hardware temperature monitor"
 HOMEPAGE="https://wpitchoune.net/psensor/"
-SRC_URI="https://wpitchoune.net/${PN}/files/${PN}-${PV}.tar.gz"
+
+EGIT_REPO_URI="https://gitlab.com/jeanfi/psensor.git"
+EGIT_COMMIT="7e4173d54bc3ddf63d15d33ac2f096f1abaf0ca7"
+
 KEYWORDS="amd64 ~x86"
 LICENSE="GPL-2"
 SLOT="0"
@@ -47,6 +50,7 @@ src_configure() {
 		$(use_enable nls)
 		$(use_with X x)
 	)
+	eautoreconf
 
 	CFLAGS=-Wno-error=incompatible-pointer-types econf "${econfargs[@]}" || die
 }

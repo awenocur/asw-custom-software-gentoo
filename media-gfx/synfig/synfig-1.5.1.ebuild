@@ -35,7 +35,7 @@ DEPEND="
 	ffmpeg? ( media-video/ffmpeg:= )
 	fontconfig? ( media-libs/fontconfig )
 	jpeg? ( virtual/jpeg )
-	opencl? ( dev-libs/ocl-icd )
+	opencl? ( dev-libs/opencl-icd-loader )
 	openexr? ( media-libs/openexr:= )
 	truetype? ( media-libs/freetype:= )
 	"
@@ -46,6 +46,7 @@ RDEPEND="${DEPEND}
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-1.4.0-fix-cflags.patch
+	"${FILESDIR}"/skip-ocl-check.patch
 )
 
 src_prepare() {

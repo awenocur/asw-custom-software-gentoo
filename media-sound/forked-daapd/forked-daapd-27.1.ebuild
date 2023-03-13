@@ -47,6 +47,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	eapply_user
 	eautoreconf
 }
 
