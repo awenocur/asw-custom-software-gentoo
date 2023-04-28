@@ -8,3 +8,20 @@ index b846eaa..fdb72fc 100644
  [features]
 -default = ["use_custom_libcxx"]
  use_custom_libcxx = []
+diff --git a/build.rs b/build.rs
+index f9e3dbf..b023080 100644
+--- a/build.rs
++++ b/build.rs
+@@ -97,12 +97,5 @@ fn build_v8() {
+   env::set_var("PYTHONDONTWRITEBYTECODE", "1");
+ 
+   // git submodule update --init --recursive
+-  let libcxx_src = PathBuf::from("buildtools/third_party/libc++/trunk/src");
+-  if !libcxx_src.is_dir() {
+-    eprintln!(
+-      "missing source code. Run 'git submodule update --init --recursive'"
+-    );
+-    exit(1);
+-  }
+ 
+   if need_gn_ninja_download() {

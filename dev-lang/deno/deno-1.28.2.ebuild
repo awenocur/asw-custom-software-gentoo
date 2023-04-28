@@ -4,9 +4,11 @@
 EAPI=7
 KEYWORDS="amd64 x86"
 
+CHROMIUM_VERSION=109.0.5414.74
 V8_VERSION='0.55.0'
 
 CRATES="
+v8-${V8_VERSION}
 Inflector-0.11.4
 adler-1.0.2
 aead-0.5.1
@@ -500,7 +502,6 @@ urlpattern-0.2.0
 utf-8-0.7.6
 utf8parse-0.2.0
 uuid-1.1.2
-v8-${V8_VERSION}
 vcpkg-0.2.15
 version_check-0.9.4
 void-1.0.2
@@ -556,7 +557,8 @@ inherit cargo
 
 DESCRIPTION="A modern runtime for JavaScript and TypeScript."
 HOMEPAGE="https://deno.land"
-SRC_URI="$(cargo_crate_uris ${CRATES})"
+SRC_URI="$(cargo_crate_uris ${CRATES})
+	https://commondatastorage.googleapis.com/chromium-browser-official/chromium-${CHROMIUM_VERSION}.tar.xz"
 BDEPEND="${RUST_DEPEND}"
 SLOT="0"
 LICENSE=MIT
@@ -565,6 +567,7 @@ src_prepare() {
 	rm Cargo.lock
 	cat ${FILESDIR}/v8-${V8_VERSION}-fix-clang-flags.patch | patch -d ${ECARGO_VENDOR}/v8-${V8_VERSION}/build/config/compiler
 	cat ${FILESDIR}/v8-${V8_VERSION}-disable-custom-libc++.patch | patch -d ${ECARGO_VENDOR}/v8-${V8_VERSION}
+	mv ${WORKDIR}/chromium-${CHROMIUM_VERSION}/v8/tools/builtins-pgo ${ECARGO_VENDOR}/v8-${V8_VERSION}/v8/tools
 	default
 }
 
