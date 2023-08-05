@@ -1,16 +1,29 @@
-diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/third_party/gpus/rocm_configure.bzl
---- orig/third_party/gpus/rocm_configure.bzl	2021-10-26 11:01:14.677926624 +0800
-+++ tensorflow-2.5.0/third_party/gpus/rocm_configure.bzl	2021-10-26 13:17:01.990086861 +0800
-@@ -182,19 +182,7 @@ def _rocm_include_path(repository_ctx, r
+diff --git a/third_party/gpus/rocm_configure.bzl b/third_party/gpus/rocm_configure.bzl
+index dd698f9..cdc793b 100644
+--- a/third_party/gpus/rocm_configure.bzl
++++ b/third_party/gpus/rocm_configure.bzl
+@@ -35,7 +35,7 @@ _ROCM_TOOLKIT_PATH = "ROCM_PATH"
+ _TF_ROCM_AMDGPU_TARGETS = "TF_ROCM_AMDGPU_TARGETS"
+ _TF_ROCM_CONFIG_REPO = "TF_ROCM_CONFIG_REPO"
  
-     # Add HIP-Clang headers (realpath relative to compiler binary)
-     rocm_toolkit_path = realpath(repository_ctx, rocm_config.rocm_toolkit_path, bash_bin)
+-_DEFAULT_ROCM_TOOLKIT_PATH = "/opt/rocm"
++_DEFAULT_ROCM_TOOLKIT_PATH = "@GENTOO_PORTAGE_EPREFIX@/usr/lib/llvm/15"
+ 
+ def verify_build_defines(params):
+     """Verify all variables that crosstool/BUILD.rocm.tpl expects are substituted.
+@@ -180,22 +180,7 @@ def _rocm_include_path(repository_ctx, rocm_config, bash_bin):
+     # Add HIP headers (needs to match $HIP_PATH)
+     inc_dirs.append(rocm_config.rocm_toolkit_path + "/hip/include")
+ 
+-    # Add HIP-Clang headers (realpath relative to compiler binary)
+-    rocm_toolkit_path = realpath(repository_ctx, rocm_config.rocm_toolkit_path, bash_bin)
 -    inc_dirs.append(rocm_toolkit_path + "/llvm/lib/clang/8.0/include")
 -    inc_dirs.append(rocm_toolkit_path + "/llvm/lib/clang/9.0.0/include")
 -    inc_dirs.append(rocm_toolkit_path + "/llvm/lib/clang/10.0.0/include")
 -    inc_dirs.append(rocm_toolkit_path + "/llvm/lib/clang/11.0.0/include")
 -    inc_dirs.append(rocm_toolkit_path + "/llvm/lib/clang/12.0.0/include")
 -    inc_dirs.append(rocm_toolkit_path + "/llvm/lib/clang/13.0.0/include")
+-    inc_dirs.append(rocm_toolkit_path + "/llvm/lib/clang/14.0.0/include")
 -
 -    # Support hcc based off clang 10.0.0 (for ROCm 3.3)
 -    inc_dirs.append(rocm_toolkit_path + "/hcc/compiler/lib/clang/10.0.0/include/")
@@ -18,18 +31,18 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
 -
 -    # Add hcc headers
 -    inc_dirs.append(rocm_toolkit_path + "/hcc/include")
-+    inc_dirs.append("@GENTOO_PORTAGE_EPREFIX@/usr/lib/llvm/roc/lib/clang/14.0.0/include")
++    inc_dirs.append("@GENTOO_PORTAGE_EPREFIX@/usr/lib/llvm/15/include")
  
      return inc_dirs
  
-@@ -326,15 +314,15 @@ def _find_libs(repository_ctx, rocm_conf
+@@ -328,15 +313,15 @@ def _find_libs(repository_ctx, rocm_config, hipfft_or_rocfft, bash_bin):
      libs_paths = [
          (name, _rocm_lib_paths(repository_ctx, name, path))
          for name, path in [
 -            ("amdhip64", rocm_config.rocm_toolkit_path + "/hip"),
 -            ("rocblas", rocm_config.rocm_toolkit_path + "/rocblas"),
 -            (hipfft_or_rocfft, rocm_config.rocm_toolkit_path + "/" + hipfft_or_rocfft),
--            ("hiprand", rocm_config.rocm_toolkit_path + "/hiprand"),
+-            ("hiprand", rocm_config.rocm_toolkit_path),
 -            ("MIOpen", rocm_config.rocm_toolkit_path + "/miopen"),
 -            ("rccl", rocm_config.rocm_toolkit_path + "/rccl"),
 -            ("hipsparse", rocm_config.rocm_toolkit_path + "/hipsparse"),
@@ -46,18 +59,20 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
 +            ("rocsolver", "@GENTOO_PORTAGE_EPREFIX@/usr/lib64"),
          ]
      ]
- 
-@@ -549,101 +537,100 @@ def _create_local_rocm_repository(reposi
+     if int(rocm_config.rocm_version_number) >= 40500:
+@@ -554,24 +539,17 @@ def _create_local_rocm_repository(repository_ctx):
+     # rocm_toolkit_path
+     rocm_toolkit_path = rocm_config.rocm_toolkit_path
      copy_rules = [
-         make_copy_dir_rule(
-             repository_ctx,
+-        make_copy_dir_rule(
+-            repository_ctx,
 -            name = "rocm-include",
 -            src_dir = rocm_toolkit_path + "/include",
 -            out_dir = "rocm/include",
 -            exceptions = ["gtest", "gmock"],
 -        ),
--        make_copy_dir_rule(
--            repository_ctx,
+         make_copy_dir_rule(
+             repository_ctx,
              name = hipfft_or_rocfft + "-include",
 -            src_dir = rocm_toolkit_path + "/" + hipfft_or_rocfft + "/include",
 +            src_dir = rocm_toolkit_path + "/include/" + hipfft_or_rocfft,
@@ -73,12 +88,7 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
          ),
          make_copy_dir_rule(
              repository_ctx,
-             name = "rocblas-hsaco",
--            src_dir = rocm_toolkit_path + "/rocblas/lib/library",
--            out_dir = "rocm/lib/rocblas/lib/library",
-+            src_dir = rocm_toolkit_path + "/lib64/rocblas/library",
-+            out_dir = "lib/rocblas/library",
-         ),
+@@ -582,27 +560,63 @@ def _create_local_rocm_repository(repository_ctx):
          make_copy_dir_rule(
              repository_ctx,
              name = "miopen-include",
@@ -147,6 +157,11 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
 +        ),
      ]
  
+     # Add Hipsolver on ROCm4.5+
+@@ -624,37 +638,6 @@ def _create_local_rocm_repository(repository_ctx):
+             ),
+         )
+ 
 -    # explicitly copy (into the local_config_rocm repo) the $ROCM_PATH/hiprand/include and
 -    # $ROCM_PATH/rocrand/include dirs, only once the softlink to them in $ROCM_PATH/include
 -    # dir has been removed. This removal will happen in a near-future ROCm release.
@@ -177,17 +192,11 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
 -                out_dir = "rocm/include/rocrand",
 -            ),
 -        )
- 
+-
      rocm_libs = _find_libs(repository_ctx, rocm_config, hipfft_or_rocfft, bash_bin)
      rocm_lib_srcs = []
      rocm_lib_outs = []
-     for lib in rocm_libs.values():
-         rocm_lib_srcs.append(lib.path)
-         rocm_lib_outs.append("rocm/lib/" + lib.file_name)
-     copy_rules.append(make_copy_files_rule(
-         repository_ctx,
-         name = "rocm-lib",
-         srcs = rocm_lib_srcs,
+@@ -668,7 +651,7 @@ def _create_local_rocm_repository(repository_ctx):
          outs = rocm_lib_outs,
      ))
  
@@ -196,30 +205,29 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
  
      # copy files mentioned in third_party/gpus/rocm/BUILD
      copy_rules.append(make_copy_files_rule(
-         repository_ctx,
-@@ -679,14 +665,17 @@ def _create_local_rocm_repository(reposi
-             "%{roctracer_lib}": rocm_libs["roctracer64"].file_name,
-             "%{rocsolver_lib}": rocm_libs["rocsolver"].file_name,
-             "%{copy_rules}": "\n".join(copy_rules),
--            "%{rocm_headers}": ('":rocm-include",\n' +
--                                '":' + hipfft_or_rocfft + '-include",\n' +
-+            "%{rocm_headers}": ('":' + hipfft_or_rocfft + '-include",\n' +
-                                 '":rocblas-include",\n' +
-+                                '":roctracer-include",\n' +
-+								'":hipcub-include",\n' +
-+								'":hip-include",\n' +
-                                 '":miopen-include",\n' +
-                                 '":rccl-include",\n' +
--                                hiprand_include +
--                                rocrand_include +
-                                 '":hipsparse-include",\n' +
-+                                '":hiprand-include",\n' +
-+                                '":rocrand-include",\n' +
-+                                '":rocprim-include",\n' +
-                                 '":rocsolver-include"'),
-         },
-     )
-@@ -721,7 +710,7 @@ def _create_local_rocm_repository(reposi
+@@ -709,14 +692,17 @@ def _create_local_rocm_repository(repository_ctx):
+         "%{roctracer_lib}": rocm_libs["roctracer64"].file_name,
+         "%{rocsolver_lib}": rocm_libs["rocsolver"].file_name,
+         "%{copy_rules}": "\n".join(copy_rules),
+-        "%{rocm_headers}": ('":rocm-include",\n' +
+-                            '":' + hipfft_or_rocfft + '-include",\n' +
++        "%{rocm_headers}": ('":' + hipfft_or_rocfft + '-include",\n' +
+                             '":rocblas-include",\n' +
++                            '":roctracer-include",\n' +
++                                                        '":hipcub-include",\n' +
++                                                        '":hip-include",\n' +
+                             '":miopen-include",\n' +
+                             '":rccl-include",\n' +
+-                            hiprand_include +
+-                            rocrand_include +
+                             '":hipsparse-include",\n' +
++                            '":hiprand-include",\n' +
++                            '":rocrand-include",\n' +
++                            '":rocprim-include",\n' +
+                             '":rocsolver-include"'),
+     }
+     if rocm_version_number >= 40500:
+@@ -761,7 +747,7 @@ def _create_local_rocm_repository(repository_ctx):
      rocm_defines["%{host_compiler_path}"] = "clang/bin/crosstool_wrapper_driver_is_not_gcc"
  
      rocm_defines["%{cxx_builtin_include_directories}"] = to_list_of_strings(
@@ -228,7 +236,7 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
      )
  
      verify_build_defines(rocm_defines)
-@@ -745,11 +734,11 @@ def _create_local_rocm_repository(reposi
+@@ -785,11 +771,11 @@ def _create_local_rocm_repository(repository_ctx):
          tpl_paths["crosstool:clang/bin/crosstool_wrapper_driver_rocm"],
          {
              "%{cpu_compiler}": str(cc),
@@ -243,34 +251,37 @@ diff --color -upr orig/third_party/gpus/rocm_configure.bzl tensorflow-2.5.0/thir
              "%{hip_runtime_library}": "amdhip64",
              "%{crosstool_verbose}": _crosstool_verbose(repository_ctx),
              "%{gcc_host_compiler_path}": str(cc),
-diff --color -upr a/tensorflowcompiler/xla/service/gpu/llvm_gpu_backend/gpu_backend_lib.cc tensorflow/compiler/xla/service/gpu/llvm_gpu_backend/gpu_backend_lib.cc
---- a/tensorflowcompiler/xla/service/gpu/llvm_gpu_backend/gpu_backend_lib.cc	2021-05-12 21:26:41.000000000 +0800
-+++ b/tensorflow/compiler/xla/service/gpu/llvm_gpu_backend/gpu_backend_lib.cc	2021-10-26 13:43:26.628572583 +0800
-@@ -730,7 +730,7 @@ StatusOr<std::vector<uint8>> EmitModuleT
+diff --git a/tensorflow/compiler/xla/service/gpu/llvm_gpu_backend/gpu_backend_lib.cc b/tensorflow/compiler/xla/service/gpu/llvm_gpu_backend/gpu_backend_lib.cc
+index a2a115a..cdc3792 100644
+--- a/tensorflow/compiler/xla/service/gpu/llvm_gpu_backend/gpu_backend_lib.cc
++++ b/tensorflow/compiler/xla/service/gpu/llvm_gpu_backend/gpu_backend_lib.cc
+@@ -736,7 +736,7 @@ StatusOr<std::vector<uint8_t>> EmitModuleToHsaco(
+   // Locate lld.
    // TODO(whchung@gmail.com): change to tensorflow::ROCmRoot() after
    // ROCm-Device-Libs PR.
-   std::string lld_path_1 = tensorflow::io::JoinPath("/opt/rocm", "hcc/bin");
--  std::string lld_path_2 = tensorflow::io::JoinPath("/opt/rocm", "llvm/bin");
-+  std::string lld_path_2 = tensorflow::io::JoinPath("@GENTOO_PORTAGE_EPREFIX@/usr/lib/llvm/roc", "bin");
-   auto lld_program =
-       llvm::sys::findProgramByName("ld.lld", {lld_path_1, lld_path_2});
+-  std::string lld_path = tensorflow::io::JoinPath("/opt/rocm", "llvm/bin");
++  std::string lld_path = tensorflow::io::JoinPath("@GENTOO_PORTAGE_EPREFIX@/usr/lib/llvm/roc", "bin");
+   auto lld_program = llvm::sys::findProgramByName("ld.lld", {lld_path});
    if (!lld_program) {
-diff --color -upr a/tensorflowcore/platform/default/rocm_rocdl_path.cc tensorflow/core/platform/default/rocm_rocdl_path.cc
---- a/tensorflowcore/platform/default/rocm_rocdl_path.cc	2021-05-12 21:26:41.000000000 +0800
-+++ b/tensorflow/core/platform/default/rocm_rocdl_path.cc	2021-10-26 13:43:26.800571563 +0800
-@@ -37,7 +37,7 @@ string RocmRoot() {
+     return xla::InternalError("unable to find ld.lld in PATH: %s",
+diff --git a/tensorflow/core/platform/default/rocm_rocdl_path.cc b/tensorflow/core/platform/default/rocm_rocdl_path.cc
+index b7b55c3..a0e5e8d 100644
+--- a/tensorflow/core/platform/default/rocm_rocdl_path.cc
++++ b/tensorflow/core/platform/default/rocm_rocdl_path.cc
+@@ -36,7 +36,7 @@ string RocmRoot() {
+ }
  
  string RocdlRoot() {
- #if TF_ROCM_VERSION >= 30900
 -  return tensorflow::io::JoinPath(tensorflow::RocmRoot(), "amdgcn/bitcode");
 +  return tensorflow::io::JoinPath(tensorflow::RocmRoot(), "lib/amdgcn/bitcode");
- #else
-   return tensorflow::io::JoinPath(tensorflow::RocmRoot(), "lib");
- #endif
-diff --color -upr a/tensorflowstream_executor/gpu/asm_compiler.cc tensorflow/stream_executor/gpu/asm_compiler.cc
---- a/tensorflowstream_executor/gpu/asm_compiler.cc	2021-05-12 21:26:41.000000000 +0800
-+++ b/tensorflow/stream_executor/gpu/asm_compiler.cc	2021-10-26 13:43:26.956570635 +0800
-@@ -384,7 +384,7 @@ static std::string findRocmExecutable(co
+ }
+ 
+ }  // namespace tensorflow
+diff --git a/tensorflow/stream_executor/gpu/asm_compiler.cc b/tensorflow/stream_executor/gpu/asm_compiler.cc
+index 956fab9..4c7ea1a 100644
+--- a/tensorflow/stream_executor/gpu/asm_compiler.cc
++++ b/tensorflow/stream_executor/gpu/asm_compiler.cc
+@@ -431,7 +431,7 @@ static std::string findRocmExecutable(const std::string& binary_relative_path,
  port::StatusOr<std::vector<uint8>> BundleGpuAsm(
      std::vector<HsacoImage> images, const std::string rocm_root_dir) {
    std::string clang_offload_bundler_path =
@@ -279,16 +290,18 @@ diff --color -upr a/tensorflowstream_executor/gpu/asm_compiler.cc tensorflow/str
  
    // Initialise the "--inputs" / "--targets" arguments for the
    // clang-offload-bundler with a dummy file / host target triple...
-diff --color -upr orig/third_party/gpus/find_rocm_config.py tensorflow-2.5.0/third_party/gpus/find_rocm_config.py
---- orig/third_party/gpus/find_rocm_config.py	2021-10-12 20:40:29.201725834 +0800
-+++ tensorflow-2.5.0/third_party/gpus/find_rocm_config.py	2021-10-12 20:40:53.109621436 +0800
-@@ -70,13 +70,8 @@ def _get_header_version(path, name):
+diff --git a/third_party/gpus/find_rocm_config.py b/third_party/gpus/find_rocm_config.py
+index 91674c4..ad55bb6 100644
+--- a/third_party/gpus/find_rocm_config.py
++++ b/third_party/gpus/find_rocm_config.py
+@@ -70,14 +70,8 @@ def _get_header_version(path, name):
  def _find_rocm_config(rocm_install_path):
  
-   def rocm_version_numbers(path):
+   def rocm_version_numbers_pre_rocm50(path, prior_err):
 -    version_file = os.path.join(path, ".info/version-dev")
 -    if not os.path.exists(version_file):
--      raise ConfigError('ROCm version file "{}" not found'.format(version_file))
+-      raise ConfigError("{} ROCm version file ".format(prior_err) +
+-                        '"{}" not found either.'.format(version_file))
 -    version_numbers = []
 -    with open(version_file) as f:
 -      version_string = f.read().strip()
@@ -298,7 +311,7 @@ diff --color -upr orig/third_party/gpus/find_rocm_config.py tensorflow-2.5.0/thi
      major = int(version_numbers[0])
      minor = int(version_numbers[1])
      patch = int(version_numbers[2].split("-")[0])
-@@ -94,7 +89,7 @@ def _find_rocm_config(rocm_install_path)
+@@ -110,7 +104,7 @@ def _find_rocm_config(rocm_install_path):
  def _find_hipruntime_config(rocm_install_path):
  
    def hipruntime_version_number(path):
@@ -307,16 +320,7 @@ diff --color -upr orig/third_party/gpus/find_rocm_config.py tensorflow-2.5.0/thi
      if not os.path.exists(version_file):
        raise ConfigError(
            'HIP Runtime version file "{}" not found'.format(version_file))
-@@ -116,7 +111,7 @@ def _find_hipruntime_config(rocm_install
- def _find_miopen_config(rocm_install_path):
- 
-   def miopen_version_numbers(path):
--    version_file = os.path.join(path, "miopen/include/miopen/version.h")
-+    version_file = os.path.join(path, "include/miopen/version.h")
-     if not os.path.exists(version_file):
-       raise ConfigError(
-           'MIOpen version file "{}" not found'.format(version_file))
-@@ -139,8 +134,8 @@ def _find_rocblas_config(rocm_install_pa
+@@ -155,8 +149,8 @@ def _find_rocblas_config(rocm_install_path):
  
    def rocblas_version_numbers(path):
      possible_version_files = [
@@ -327,16 +331,7 @@ diff --color -upr orig/third_party/gpus/find_rocm_config.py tensorflow-2.5.0/thi
      ]
      version_file = None
      for f in possible_version_files:
-@@ -170,7 +165,7 @@ def _find_rocblas_config(rocm_install_pa
- def _find_rocrand_config(rocm_install_path):
- 
-   def rocrand_version_number(path):
--    version_file = os.path.join(path, "rocrand/include/rocrand_version.h")
-+    version_file = os.path.join(path, "include/rocrand/rocrand_version.h")
-     if not os.path.exists(version_file):
-       raise ConfigError(
-           'rocblas version file "{}" not found'.format(version_file))
-@@ -187,7 +182,7 @@ def _find_rocrand_config(rocm_install_pa
+@@ -212,7 +206,7 @@ def _find_rocrand_config(rocm_install_path):
  def _find_rocfft_config(rocm_install_path):
  
    def rocfft_version_numbers(path):
@@ -345,7 +340,7 @@ diff --color -upr orig/third_party/gpus/find_rocm_config.py tensorflow-2.5.0/thi
      if not os.path.exists(version_file):
        raise ConfigError(
            'rocfft version file "{}" not found'.format(version_file))
-@@ -209,7 +204,7 @@ def _find_rocfft_config(rocm_install_pat
+@@ -234,7 +228,7 @@ def _find_rocfft_config(rocm_install_path):
  def _find_hipfft_config(rocm_install_path):
  
    def hipfft_version_numbers(path):
@@ -354,7 +349,7 @@ diff --color -upr orig/third_party/gpus/find_rocm_config.py tensorflow-2.5.0/thi
      if not os.path.exists(version_file):
        raise ConfigError(
            'hipfft version file "{}" not found'.format(version_file))
-@@ -231,7 +226,7 @@ def _find_hipfft_config(rocm_install_pat
+@@ -256,7 +250,7 @@ def _find_hipfft_config(rocm_install_path):
  def _find_roctracer_config(rocm_install_path):
  
    def roctracer_version_numbers(path):
@@ -363,7 +358,7 @@ diff --color -upr orig/third_party/gpus/find_rocm_config.py tensorflow-2.5.0/thi
      if not os.path.exists(version_file):
        raise ConfigError(
            'roctracer version file "{}" not found'.format(version_file))
-@@ -254,7 +249,7 @@ def _find_roctracer_config(rocm_install_
+@@ -279,7 +273,7 @@ def _find_roctracer_config(rocm_install_path):
  def _find_hipsparse_config(rocm_install_path):
  
    def hipsparse_version_numbers(path):
@@ -372,7 +367,7 @@ diff --color -upr orig/third_party/gpus/find_rocm_config.py tensorflow-2.5.0/thi
      if not os.path.exists(version_file):
        raise ConfigError(
            'hipsparse version file "{}" not found'.format(version_file))
-@@ -276,7 +271,7 @@ def _find_hipsparse_config(rocm_install_
+@@ -331,7 +325,7 @@ def _find_hipsolver_config(rocm_install_path):
  def _find_rocsolver_config(rocm_install_path):
  
    def rocsolver_version_numbers(path):
@@ -381,10 +376,12 @@ diff --color -upr orig/third_party/gpus/find_rocm_config.py tensorflow-2.5.0/thi
      if not os.path.exists(version_file):
        raise ConfigError(
            'rocsolver version file "{}" not found'.format(version_file))
-diff --color -upr orig/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl tensorflow-2.5.0/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl
---- orig/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl	2021-10-27 00:14:42.956249635 +0800
-+++ tensorflow-2.5.0/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl	2021-10-27 11:11:07.309805183 +0800
-@@ -56,9 +56,9 @@ def GetOptionValue(argv, option):
+diff --git a/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl b/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl
+index 8fb2231..3d9adb5 100755
+--- a/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl
++++ b/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_rocm.tpl
+@@ -53,10 +53,10 @@ def GetOptionValue(argv, option):
+   parser = ArgumentParser()
    parser.add_argument('-' + option, nargs='*', action='append')
    args, _ = parser.parse_known_args(argv)
 -  if not args or not vars(args)[option]:
@@ -396,8 +393,8 @@ diff --color -upr orig/third_party/gpus/crosstool/clang/bin/crosstool_wrapper_dr
  
  
  def GetHostCompilerOptions(argv):
-@@ -138,6 +138,7 @@ def InvokeHipcc(argv, log=False):
-   hipcc_allowed_std_options = ["c++11"]
+@@ -136,6 +136,7 @@ def InvokeHipcc(argv, log=False):
+   hipcc_allowed_std_options = ["c++11", "c++14", "c++17"]
    std_options = ''.join([' -std=' + define
        for define in std_options if define in hipcc_allowed_std_options])
 +  gpu_archs = GetOptionValue(argv, '-amdgpu-target')
