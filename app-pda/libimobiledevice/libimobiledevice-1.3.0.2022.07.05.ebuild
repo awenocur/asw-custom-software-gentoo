@@ -4,23 +4,26 @@
 EAPI=7
 PYTHON_COMPAT=( python3_{7,8} )
 
-inherit autotools python-r1
+inherit autotools python-r1 git-r3
+
+EGIT_REPO_URI="https://github.com/libimobiledevice/libimobiledevice.git"
+EGIT_BRANCH=master
+EGIT_COMMIT="6fc41f57fc607df9b07446ca45bdf754225c9bd9"
 
 DESCRIPTION="Support library to communicate with Apple iPhone/iPod Touch devices"
 HOMEPAGE="https://www.libimobiledevice.org/"
-SRC_URI="https://github.com/awenocur/libimobiledevice/archive/${PV}.tar.gz"
 
 # While COPYING* doesn't mention 'or any later version', all the headers do, hence use +
 LICENSE="GPL-2+ LGPL-2.1+"
 
 SLOT="0/1.0-6" # based on SONAME of libimobiledevice-1.0.so
 
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
+KEYWORDS="amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
 IUSE="doc gnutls libressl python static-libs"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 RDEPEND="
-	>=app-pda/libplist-2.2.0:=
+	>=app-pda/libplist-2.3.0:=
 	>=app-pda/libusbmuxd-2.0.2:=
 	gnutls? (
 		dev-libs/libgcrypt:0
