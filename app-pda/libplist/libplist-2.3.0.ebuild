@@ -21,7 +21,6 @@ RDEPEND="python? ( ${PYTHON_DEPS} )"
 DEPEND="${RDEPEND}"
 BDEPEND="
 	virtual/pkgconfig
-	app-pda/libimobiledevice-glue
 	python? ( >=dev-python/cython-0.17[${PYTHON_USEDEP}] )
 "
 
