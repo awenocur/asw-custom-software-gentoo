@@ -19,7 +19,8 @@ KEYWORDS="amd64"
 IUSE=""
 
 DEPEND="virtual/libusb:1
-        sys-libs/readline"
+        sys-libs/readline
+	>=app-pda/libplist-2.3.0"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
