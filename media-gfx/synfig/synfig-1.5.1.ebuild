@@ -3,9 +3,9 @@
 
 #Ebuild based on the booboo overlay version
 
-EAPI=7
+EAPI=8
 
-inherit autotools eutils multilib flag-o-matic
+inherit autotools multilib flag-o-matic
 
 # Original TODO from bgo-overlay
 # Todo: enable OpenGL (currently not compiling)

@@ -23,6 +23,7 @@ IUSE="doc gnutls libressl python static-libs"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 RDEPEND="
+	>=app-pda/libimobiledevice-glue-1.0.0:=
 	>=app-pda/libplist-2.3.0:=
 	>=app-pda/libusbmuxd-2.0.2:=
 	gnutls? (

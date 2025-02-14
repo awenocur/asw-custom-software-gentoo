@@ -30,7 +30,6 @@ DEPEND="${DEPEND}
 perl? (
 	dev-perl/Module-Build
 	dev-lang/swig )
-	sys-devel/autoconf-wrapper
 "
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 

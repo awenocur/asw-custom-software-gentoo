@@ -3,10 +3,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{6,7,8,9} )
+PYTHON_COMPAT=( python3_{10,11,12} )
 DISTUTILS_USE_SETUPTOOLS="rdepend"
 
-KIWIX_REVISION="r_17"
+KIWIX_REVISION="r_58"
 
 SRC_URI="https://github.com/kiwix/${PN}/archive/${KIWIX_REVISION}.zip -> ${P}.zip"
 S=${WORKDIR}/${PN}-${KIWIX_REVISION}
@@ -20,10 +20,7 @@ HOMEPAGE="https://github.com/kiwix/kiwix-build/"
 LICENSE="GPL-3"
 SLOT="0"
 
-PATCHES="${FILESDIR}/requirement.new.patch
-	${FILESDIR}/supported.patch"
-
 DEPEND="
-	>=dev-util/ninja-1.6
-	>=dev-util/meson-0.34
+	>=dev-build/ninja-1.6
+	>=dev-build/meson-0.34
 "

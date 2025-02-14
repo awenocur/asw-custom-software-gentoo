@@ -3,8 +3,6 @@
 
 EAPI=7
 
-inherit eutils
-
 DESCRIPTION="script to augment my PulseAudio config"
 
 LICENSE="MIT"

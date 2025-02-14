@@ -3,8 +3,6 @@
 
 EAPI=7
 
-inherit eutils
-
 DESCRIPTION="A perpetual Jewish Calendar"
 HOMEPAGE="https://www.hebcal.com"
 SRC_URI="https://github.com/hebcal/hebcal/archive/v${PV}.zip -> hebcal-${PV}.zip"
@@ -12,3 +10,10 @@ SRC_URI="https://github.com/hebcal/hebcal/archive/v${PV}.zip -> hebcal-${PV}.zip
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 arm arm64 ppc ppc64 x86"
+
+src_prepare() {
+      default
+      autoreconf
+      automake --add-missing
+      autoreconf
+}

@@ -11,6 +11,6 @@ DESCRIPTION="The Kiwix tools is a collection of Kiwix related command line tools
 
 SRC_URI="https://github.com/kiwix/${PN}/archive/${PV}.zip -> ${P}.zip"
 
-DEPEND="dev-cpp/kiwix-lib
+DEPEND="dev-cpp/libkiwix
 	net-libs/libmicrohttpd"
 

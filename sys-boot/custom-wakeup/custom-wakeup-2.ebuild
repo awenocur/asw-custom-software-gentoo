@@ -3,8 +3,6 @@
 
 EAPI=7
 
-inherit eutils
-
 DESCRIPTION="script to fix my fans and HDDs"
 
 LICENSE="MIT"

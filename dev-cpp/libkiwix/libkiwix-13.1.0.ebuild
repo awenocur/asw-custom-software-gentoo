@@ -10,7 +10,7 @@ DESCRIPTION="The Kiwix library provides the Kiwix software
 suite core. It contains the code shared by all Kiwix ports (Windows,
 GNU/Linux, macOS, Android, iOS, ...)."
 
-SRC_URI="https://github.com/kiwix/kiwix-lib/archive/${PV}.zip -> ${P}.zip"
+SRC_URI="https://github.com/kiwix/${PN}/archive/${PV}.zip -> ${P}.zip"
 
 DEPEND="dev-libs/pugixml
 dev-cpp/Mustache

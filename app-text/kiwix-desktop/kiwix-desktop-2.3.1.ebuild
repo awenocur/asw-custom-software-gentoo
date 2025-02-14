@@ -13,7 +13,7 @@ KEYWORDS="amd64"
 
 BDEPEND="dev-util/kiwix-build"
 
-DEPEND="dev-cpp/kiwix-lib
+DEPEND="dev-cpp/libkiwix
 	net-misc/aria2
 	dev-qt/qtwebengine
 	dev-qt/qtgui

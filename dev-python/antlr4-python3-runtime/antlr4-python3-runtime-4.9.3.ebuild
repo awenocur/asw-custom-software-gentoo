@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{10..11} pypy3 )
 inherit distutils-r1
 
 DESCRIPTION="Python 3 runtime for ANTLR"
@@ -14,7 +14,7 @@ S="${WORKDIR}/antlr4-${PV}/runtime/Python3"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 ~x86"
 
 python_test() {
 	"${EPYTHON}" tests/run.py -v || die "Tests failed with ${EPYTHON}"

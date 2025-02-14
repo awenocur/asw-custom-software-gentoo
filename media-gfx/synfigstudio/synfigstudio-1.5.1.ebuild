@@ -7,9 +7,9 @@
 # purpose with or without fee is hereby granted, provided that the above
 # copyright notice and this permission notice appear in all copies.
 
-EAPI=7
+EAPI=8
 
-inherit autotools eutils multilib flag-o-matic xdg-utils
+inherit autotools multilib flag-o-matic xdg-utils
 
 DESCRIPTION="Vector animation studio"
 HOMEPAGE="https://www.synfig.org"
