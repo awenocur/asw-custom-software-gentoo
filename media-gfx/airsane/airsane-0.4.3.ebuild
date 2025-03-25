@@ -14,7 +14,7 @@ inherit cmake-utils
 
 DESCRIPTION="Apple AirScan compatible SANE web frontend."
 HOMEPAGE="https://github.com/SimulPiscator/AirSane"
-SRC_URI="https://github.com/awenocur/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/SimulPiscator/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -31,7 +31,6 @@ RDEPEND="${DEPEND}
 S=${WORKDIR}/AirSane-${PV}
 
 PATCHES=(
-	"${FILESDIR}"/png.patch
 	"${FILESDIR}"/systemd.patch
 )
 

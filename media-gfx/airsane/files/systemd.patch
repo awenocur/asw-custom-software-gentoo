@@ -1,18 +1,13 @@
-diff --git a/systemd/airsaned.service b/systemd/airsaned.service
-index 5e7e924..36babdc 100644
---- a/systemd/airsaned.service
-+++ b/systemd/airsaned.service
-@@ -4,10 +4,10 @@ After=network.target
- 
- [Service]
- EnvironmentFile=-/etc/default/airsane
--ExecStart=/usr/local/bin/airsaned --interface=${INTERFACE} --listen-port=${LISTEN_PORT} --access-log=${ACCESS_LOG} --hotplug=${HOTPLUG} --mdns-announce=${MDNS_ANNOUNCE} --local-scanners-only=${LOCAL_SCANNERS_ONLY}
-+ExecStart=/usr/bin/airsaned --interface=${INTERFACE} --listen-port=${LISTEN_PORT} --access-log=${ACCESS_LOG} --hotplug=${HOTPLUG} --mdns-announce=${MDNS_ANNOUNCE} --local-scanners-only=${LOCAL_SCANNERS_ONLY}
+diff --git a/systemd/airsaned.service.in b/systemd/airsaned.service.in
+index 2b41a88..05b0748 100644
+--- a/systemd/airsaned.service.in
++++ b/systemd/airsaned.service.in
+@@ -8,7 +8,7 @@ ExecStart=@CMAKE_INSTALL_FULL_BINDIR@/airsaned --interface=${INTERFACE} --listen
  ExecReload=/bin/kill -HUP $MAINPID
+ ExecStartPre=/bin/sleep 15
  User=saned
 -Group=saned
 +Group=scanner
  Type=simple
  
  [Install]
- 
