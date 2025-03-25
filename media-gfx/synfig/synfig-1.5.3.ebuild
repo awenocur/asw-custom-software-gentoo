@@ -3,9 +3,9 @@
 
 #Ebuild based on the booboo overlay version
 
-EAPI=7
+EAPI=8
 
-inherit autotools eutils multilib flag-o-matic
+inherit autotools multilib flag-o-matic
 
 # Original TODO from bgo-overlay
 # Todo: enable OpenGL (currently not compiling)
@@ -35,7 +35,7 @@ DEPEND="
 	ffmpeg? ( media-video/ffmpeg:= )
 	fontconfig? ( media-libs/fontconfig )
 	jpeg? ( virtual/jpeg )
-	opencl? ( dev-libs/ocl-icd )
+	opencl? ( dev-libs/opencl-icd-loader )
 	openexr? ( media-libs/openexr:= )
 	truetype? ( media-libs/freetype:= )
 	"
@@ -45,7 +45,7 @@ RDEPEND="${DEPEND}
 	"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-1.4.0-fix-cflags.patch
+	"${FILESDIR}"/skip-ocl-check.patch
 )
 
 src_prepare() {
